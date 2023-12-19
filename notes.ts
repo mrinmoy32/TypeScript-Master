@@ -31,4 +31,5 @@
     let firstName: string = "Dylan";
 
     //B. Implicit Type Assignment: TypeScript will "guess" the type, based on the assigned value
-    let lastname = "Smith";
+    let lastName = "Smith";
+    console.log(firstName, lastName)
