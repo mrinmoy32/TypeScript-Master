@@ -1,3 +1,13 @@
+//***************** TO RUN .ts FILE FROM COMMAND OF NODE *******************
+//A. Using ts-node fileName.ts
+    //npm install -g ts-node typescript '@types/node'
+    //ts-node typescript-file.ts
+//B. Using typescript compiler by converting .ts file to .js file
+    //npm install -g typescript
+    //tsc typescript-file.ts
+    //node typescript-file.ts
+
+
 //1. What is TypeScript?
 //TypeScript is a syntactic superset of JavaScript which adds static typing.
 //This basically means that TypeScript adds syntax on top of JavaScript, allowing developers to add types.
@@ -32,4 +42,9 @@
 
     //B. Implicit Type Assignment: TypeScript will "guess" the type, based on the assigned value
     let lastName = "Smith";
-    console.log(firstName, lastName)
+
+    console.log(firstName, lastName) //Dylan Smith
+
+//5. Error In Type Assignment - TypeScript will throw an error if data types do not match.
+//-------------------------------------
+    //A. 
