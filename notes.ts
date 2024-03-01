@@ -5,7 +5,7 @@
 //B. Using typescript compiler by converting .ts file to .js file
     //npm install -g typescript
     //tsc typescript-file.ts
-    //node typescript-file.ts
+    //node typescript-file.js
 //---------------------------
 //To install TS compiler: npm install typescript --save-dev
 //To create tsconfig.json: npx tsc --init
