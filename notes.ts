@@ -1,4 +1,4 @@
-//***************** TO RUN .ts FILE FROM COMMAND OF NODE *******************
+//***************** TO RUN .ts FILE FROM NODE Terminal *******************
 //A. Using ts-node fileName.ts
     //npm install -g ts-node typescript '@types/node'
     //ts-node typescript-file.ts
