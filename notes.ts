@@ -26,6 +26,10 @@
 // The main objective of having types is that we can have static types and intellicense can help
 // in coding with method suggestion for that type
 
+// Static Types: TypeScript's static types allow for early detection of type-related errors, improving code reliability and reducing runtime bugs.
+
+// While JavaScript also benefits from IntelliSense in VS Code, TypeScript's explicit type definitions offer more accurate and detailed suggestions, making it easier to write and maintain code
+
 //3. TypeScript Simple Types
 //--------------------------------
     //There are three main primitives in JavaScript and TypeScript.
