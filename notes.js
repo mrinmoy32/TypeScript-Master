@@ -4,7 +4,7 @@
 //ts-node typescript-file.ts
 //B. Using typescript compiler by converting .ts file to .js file
 //npm install -g typescript
-//tsc typescript-file.ts
+//tsc typescript-file.ts (***to directly change with watch: tsc typescript-file.ts --watch)
 //node typescript-file.js
 //---------------------------
 //To install TS compiler: npm install typescript --save-dev
@@ -18,6 +18,8 @@
 //TypeScript allows specifying the types of data being passed around within the code, and has the ability to report errors when the types don't match.
 //For example, TypeScript will report an error when passing a string into a function that expects a number. JavaScript will not.
 //========================================================================================================
+// The main objective of having types is that we can have static types and intellicense can help
+// in coding with method suggestion for that type
 //3. TypeScript Simple Types
 //--------------------------------
 //There are three main primitives in JavaScript and TypeScript.
@@ -29,11 +31,22 @@
 // symbol - are used to create a globally unique identifier.
 //4. Type Assignment
 //----------------------------------
+// Unlike JS encourages to use only let and const. That's because var declarations are accessible anywhere within their containing function, module, namespace, or global scope
 //A. Explicit Type Assignment: writing out the type
 var firstName = "Dylan";
 //B. Implicit Type Assignment: TypeScript will "guess" the type, based on the assigned value
 var lastName = "Smith";
 console.log(firstName, lastName); //Dylan Smith
+//boolean
+var myBool = true;
+console.log("myBool: ", myBool);
+//number
+var myNumber;
+myNumber = 3;
+console.log("myNumber: ", myNumber);
+//template string
+var sentence = "It is a template string and myBool is ".concat(myBool, ", myNumber is ").concat(myNumber);
+console.log(sentence);
 //5. Error In Type Assignment - TypeScript will throw an error if data types do not match.
 //-------------------------------------
 //let color : string = "Blue"; // type string

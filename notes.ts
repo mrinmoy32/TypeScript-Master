@@ -4,7 +4,7 @@
     //ts-node typescript-file.ts
 //B. Using typescript compiler by converting .ts file to .js file
     //npm install -g typescript
-    //tsc typescript-file.ts
+    //tsc typescript-file.ts (***to directly change with watch: tsc typescript-file.ts --watch)
     //node typescript-file.js
 //---------------------------
 //To install TS compiler: npm install typescript --save-dev
@@ -23,6 +23,9 @@
 
 //========================================================================================================
 
+// The main objective of having types is that we can have static types and intellicense can help
+// in coding with method suggestion for that type
+
 //3. TypeScript Simple Types
 //--------------------------------
     //There are three main primitives in JavaScript and TypeScript.
@@ -38,6 +41,8 @@
 
 //4. Type Assignment
 //----------------------------------
+    // Unlike JS encourages to use only let and const. That's because var declarations are accessible anywhere within their containing function, module, namespace, or global scope
+
     //A. Explicit Type Assignment: writing out the type
     let firstName: string = "Dylan";
 
@@ -45,6 +50,20 @@
     let lastName = "Smith";
 
     console.log(firstName, lastName) //Dylan Smith
+
+    //boolean
+    const myBool: boolean = true;
+    console.log("myBool: ", myBool)
+
+    //number
+    let myNumber: number;
+    myNumber= 3
+    console.log("myNumber: ", myNumber)
+
+    //template string
+    const sentence = `It is a template string and myBool is ${myBool}, myNumber is ${myNumber}`
+    console.log(sentence)
+
 
 //5. Error In Type Assignment - TypeScript will throw an error if data types do not match.
 //-------------------------------------
