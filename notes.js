@@ -79,7 +79,7 @@ console.log(z);
 //7. TypeScript Arrays: TypeScript has a specific syntax for typing arrays.
 //---------------------------------------
 var names = [];
-console.log(typeof (names)); //object
+console.log(typeof names); //object
 names.push("Dylan"); // no error
 // names.push(3); // Error: Argument of type 'number' is not assignable to parameter of type 'string'.
 //readonly
@@ -98,18 +98,22 @@ console.log(head);
 // simple Tuple
 var ourTuple;
 // initialize correctly
-ourTuple = [5, false, 'Coding God was here'];
+ourTuple = [5, false, "Coding God was here"];
 // Incorrect initialization of tuple
 var newTuple;
 // initialized incorrectly which throws an error
 //newTuple = [false, 'Coding God was mistaken', 5]; // Error
 var nextTuple;
-nextTuple = [5, false, 'Coding God was here'];
+nextTuple = [5, false, "Coding God was here"];
 // We have no type safety in our tuple for indexes 3+
-ourTuple.push('Something new and wrong');
+ourTuple.push("Something new and wrong");
 console.log(ourTuple); //[ 5, false, 'Coding God was here', 'Something new and wrong' ]
 //readonly tuple
-var moreTuple = [5, true, 'The Real Coding God'];
+var moreTuple = [
+    5,
+    true,
+    "The Real Coding God",
+];
 //moreTuple.push('Coding God took a day off'); //Error: Property 'push' does not exist on type 'readonly [number, boolean, string]'.
 //Named Tuples
 var namedTuple = [33.3, 57.9];
@@ -119,3 +123,29 @@ console.log(namedTuple); //[ 33.3, 57.9 ]
 var graph = [55.2, 41.3];
 var first = graph[0], second = graph[1];
 console.log(first, second);
+//9. TypeScript Object Types: TypeScript has a specific syntax for typing Object.
+//---------------------------------------
+var car = {
+    type: "Toyota",
+    model: "Corolla",
+    year: 2009,
+};
+console.log(car);
+//Type Inference
+//TypeScript can infer the types of properties based on their values.
+var bike = { model: "Apache 4v" };
+bike.model = "pulsar 220"; // no error
+console.log(bike);
+// bike.model = 2024 // "Type 'number' is not assignable to type 'string'.
+// In TS object all the properties should be present and according to the type else will get error
+// To have optional properties use ?
+var mobile = { brand: "Samsung" }; // no error
+console.log(mobile); // { brand: 'Samsung' }
+mobile.year = 2023;
+console.log(mobile); // { brand: 'Samsung', year: 2023 }
+// Index Signatures
+// Index signatures can be used for objects without a defined list of properties.
+var modelYearMap = {};
+modelYearMap.realme_3pro = 2018;
+console.log(modelYearMap);
+// modelYearMap.samsung_s24 = "2024" // error: Type 'string' is not assignable to type 'number'.
