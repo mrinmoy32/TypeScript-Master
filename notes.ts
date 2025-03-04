@@ -193,3 +193,134 @@ const modelYearMap: {[index: string]: number} = {};
 modelYearMap.realme_3pro = 2018
 console.log(modelYearMap)
 // modelYearMap.samsung_s24 = "2024" // error: Type 'string' is not assignable to type 'number'.
+
+
+// In TypeScript, null and undefined are subtypes of all other types.
+// This means you can assign null or undefined to variables of type number, string, or boolean.
+// The above statement was true in older versions of TypeScript (before TypeScript 2.0)
+
+// let isNew: boolean = null; // ❌ Error: Type 'null' is not assignable to type 'boolean'.
+// let myName: string = undefined; // ❌ Error: Type 'undefined' is not assignable to type 'string'.
+
+// ✅ Correct way in strict mode: explicitly define the type using a union
+
+let isNew2: boolean | null = null;
+let myName2: boolean | undefined = undefined;
+
+//--------------------------- Enum ----------------------
+// (You may want to add enum examples here)
+
+//----------------- Union of Types -----------------
+let multiType: number | boolean;
+multiType = 20;
+multiType = true;
+
+//----------------- Any Type -----------------
+let anyType: any;
+anyType = 20;
+anyType = true;
+anyType = "Hello";
+
+// The 'any' type doesn't provide IntelliSense support.
+
+//---------------- Functions -----------------
+function add(num1: number, num2: number): number {
+    return num1 + num2;
+}
+
+add(5, 10);
+// add(5); // Error: Expected 2 arguments but got 1
+
+//---------------- Optional Parameters -----------------
+// Optional parameters should be placed after required parameters.
+// If no value is provided for an optional parameter, it defaults to undefined.
+
+function addOptional(num1: number, num2?: number): number {
+    if (num2 !== undefined) 
+        return num1 + num2;
+    else 
+        return num1;
+}
+
+addOptional(5, 10);
+addOptional(5); // No error, num2 defaults to undefined
+
+//---------------- Default Parameters -----------------
+function addDefault(num1: number, num2: number = 10): number {
+    return num1 + num2;
+}
+
+addDefault(5, 20); // Output: 25
+addDefault(5);     // Output: 15
+
+//---------------- Interface ---------------------
+// It is possible to specify an object type in TypeScript.
+
+// Bad practice: Defining an object type directly in a function parameter.
+function greet(person: { firstName: string; lastName: string }) {
+    console.log(`Hello ${person.firstName} ${person.lastName}`);
+}
+
+let p = {
+    firstName: "Virat",
+    lastName: "Kohli"
+};
+
+greet(p);
+
+// Using an interface is a better approach as it makes the code more maintainable.
+
+interface Person {
+    firstName: string;
+    lastName: string;
+}
+
+function greet2(person: Person) {
+    console.log(`Hello ${person.firstName} ${person.lastName}`);
+}
+
+let p2: Person = {
+    firstName: "Rohit",
+    lastName: "Sharma"
+};
+
+greet2(p2);
+
+// It is also possible to make properties optional, which is useful for form submissions where not all fields are required.
+interface NewPerson {
+    firstName: string;
+    lastName?: string;
+}
+
+//---------------- Classes -----------------
+// Similar to ES6, TypeScript also allows defining and using classes.
+
+class Employee {
+    public employeeName: string;
+
+    constructor(name: string) {
+        this.employeeName = name;
+    }
+
+    greet(): string {
+        return `Hi, ${this.employeeName}`;
+    }
+}
+
+let emp1 = new Employee("Pal");
+console.log(emp1.employeeName);
+console.log(emp1.greet());
+
+//---------------- Inheritance -----------------
+class Manager extends Employee {
+    constructor(name: string) {
+        super(name);
+    }
+
+    delegateTask(): string {
+        return `Task1 is assigned to ${this.employeeName}`;
+    }
+}
+
+let manager = new Manager("John");
+console.log(manager.delegateTask());

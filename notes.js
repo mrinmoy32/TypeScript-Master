@@ -149,3 +149,5 @@ var modelYearMap = {};
 modelYearMap.realme_3pro = 2018;
 console.log(modelYearMap);
 // modelYearMap.samsung_s24 = "2024" // error: Type 'string' is not assignable to type 'number'.
+//10. TypeScript Enums: TypeScript has a specific syntax for typing Object.
+//---------------------------------------
