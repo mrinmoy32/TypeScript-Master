@@ -9,6 +9,21 @@
 //---------------------------
 //To install TS compiler: npm install typescript --save-dev
 //To create tsconfig.json: npx tsc --init
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 //==================================================================================================
 //1. What is TypeScript?
 //TypeScript is a syntactic superset of JavaScript which adds static typing.
@@ -149,5 +164,163 @@ var modelYearMap = {};
 modelYearMap.realme_3pro = 2018;
 console.log(modelYearMap);
 // modelYearMap.samsung_s24 = "2024" // error: Type 'string' is not assignable to type 'number'.
-//10. TypeScript Enums: TypeScript has a specific syntax for typing Object.
-//---------------------------------------
+// In TypeScript, null and undefined are subtypes of all other types.
+// This means you can assign null or undefined to variables of type number, string, or boolean.
+// The above statement was true in older versions of TypeScript (before TypeScript 2.0)
+// let isNew: boolean = null; // ❌ Error: Type 'null' is not assignable to type 'boolean'.
+// let myName: string = undefined; // ❌ Error: Type 'undefined' is not assignable to type 'string'.
+// ✅ Correct way in strict mode: explicitly define the type using a union
+var isNew2 = null;
+var myName2 = undefined;
+//--------------------------- Enum ----------------------
+// Enums allow defining a set of named constants.
+// Numeric Enum ------------------
+var Direction;
+(function (Direction) {
+    Direction[Direction["Up"] = 1] = "Up";
+    Direction[Direction["Down"] = 2] = "Down";
+    Direction[Direction["Left"] = 3] = "Left";
+    Direction[Direction["Right"] = 4] = "Right";
+})(Direction || (Direction = {}));
+console.log(Direction.Up); // Output: 1
+console.log(Direction.Right); // Output: 4 (auto-incremented)
+// ✅ Useful for flags, indexes, or numeric values that require auto-incrementing.
+var StatusCode;
+(function (StatusCode) {
+    StatusCode[StatusCode["OK"] = 200] = "OK";
+    StatusCode[StatusCode["BadRequest"] = 400] = "BadRequest";
+    StatusCode[StatusCode["Unauthorized"] = 401] = "Unauthorized";
+    StatusCode[StatusCode["Forbidden"] = 402] = "Forbidden"; // 402 (auto-incremented)
+})(StatusCode || (StatusCode = {}));
+var responseStatusCode;
+responseStatusCode = StatusCode.Unauthorized;
+console.log(responseStatusCode); // Output: 401
+// String Enum ----------------------
+var Status;
+(function (Status) {
+    Status["Success"] = "SUCCESS";
+    Status["Failure"] = "FAILURE";
+    Status["Pending"] = "PENDING";
+})(Status || (Status = {}));
+console.log(Status.Success); // Output: "SUCCESS"
+console.log(Status.Pending); // Output: "PENDING"
+var orderStatus = Status.Success;
+console.log(orderStatus); // Output: "SUCCESS"
+var orderRequestStatus = "SUCCESS";
+//Enum ensures (Strict Type Checking) ------------------
+// ✅ Prevents incorrect assignments by ensuring only predefined values are used.
+var Role;
+(function (Role) {
+    Role["Admin"] = "ADMIN";
+    Role["User"] = "USER";
+    Role["Guest"] = "GUEST";
+})(Role || (Role = {}));
+var userRole;
+userRole = Role.Admin; // ✅ Allowed
+// userRole = "SuperUser"; // ❌ Error: Type '"SuperUser"' is not assignable to type 'Role'.
+// Heterogeneous Enum (Mixed values) ------------------
+var Result;
+(function (Result) {
+    Result["Pass"] = "PASS";
+    Result[Result["Fail"] = 0] = "Fail";
+})(Result || (Result = {}));
+console.log(Result.Pass); // Output: "PASS"
+console.log(Result.Fail); // Output: 0
+//  Reverse Mapping (For Numeric Enums) -----------
+(function (StatusCode) {
+    StatusCode[StatusCode["Success"] = 1] = "Success";
+    StatusCode[StatusCode["Failure"] = 2] = "Failure";
+})(StatusCode || (StatusCode = {}));
+console.log(StatusCode.Success); // Output: 1
+console.log(StatusCode[1]); // Output: "Success" (Reverse mapping)
+// Enums can be looped over, which is not possible with normal objects.
+var Colors;
+(function (Colors) {
+    Colors["Red"] = "RED";
+    Colors["Green"] = "GREEN";
+    Colors["Blue"] = "BLUE";
+})(Colors || (Colors = {}));
+// Looping over enum values
+for (var color in Colors) {
+    console.log(color, Colors[color]);
+}
+//----------------- Union of Types -----------------
+var multiType;
+multiType = 20;
+multiType = true;
+//----------------- Any Type -----------------
+var anyType;
+anyType = 20;
+anyType = true;
+anyType = "Hello";
+// The 'any' type doesn't provide IntelliSense support.
+//---------------- Functions -----------------
+function add(num1, num2) {
+    return num1 + num2;
+}
+add(5, 10);
+// add(5); // Error: Expected 2 arguments but got 1
+//---------------- Optional Parameters -----------------
+// Optional parameters should be placed after required parameters.
+// If no value is provided for an optional parameter, it defaults to undefined.
+function addOptional(num1, num2) {
+    if (num2 !== undefined)
+        return num1 + num2;
+    else
+        return num1;
+}
+addOptional(5, 10);
+addOptional(5); // No error, num2 defaults to undefined
+//---------------- Default Parameters -----------------
+function addDefault(num1, num2) {
+    if (num2 === void 0) { num2 = 10; }
+    return num1 + num2;
+}
+addDefault(5, 20); // Output: 25
+addDefault(5); // Output: 15
+//---------------- Interface ---------------------
+// It is possible to specify an object type in TypeScript.
+// Bad practice: Defining an object type directly in a function parameter.
+function greet(person) {
+    console.log("Hello ".concat(person.firstName, " ").concat(person.lastName));
+}
+var p = {
+    firstName: "Virat",
+    lastName: "Kohli"
+};
+greet(p);
+function greet2(person) {
+    console.log("Hello ".concat(person.firstName, " ").concat(person.lastName));
+}
+var p2 = {
+    firstName: "Rohit",
+    lastName: "Sharma"
+};
+greet2(p2);
+//---------------- Classes -----------------
+// Similar to ES6, TypeScript also allows defining and using classes.
+var Employee = /** @class */ (function () {
+    function Employee(name) {
+        this.employeeName = name;
+    }
+    Employee.prototype.greet = function () {
+        return "Hi, ".concat(this.employeeName);
+    };
+    return Employee;
+}());
+var emp1 = new Employee("Pal");
+console.log(emp1.employeeName);
+console.log(emp1.greet());
+//---------------- Inheritance -----------------
+var Manager = /** @class */ (function (_super) {
+    __extends(Manager, _super);
+    function Manager(name) {
+        return _super.call(this, name) || this;
+    }
+    Manager.prototype.delegateTask = function () {
+        return "Task1 is assigned to ".concat(this.employeeName);
+    };
+    return Manager;
+}(Employee));
+var manager = new Manager("John");
+console.log(manager.delegateTask());

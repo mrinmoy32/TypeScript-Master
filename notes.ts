@@ -208,7 +208,94 @@ let isNew2: boolean | null = null;
 let myName2: boolean | undefined = undefined;
 
 //--------------------------- Enum ----------------------
-// (You may want to add enum examples here)
+// Enums allow defining a set of named constants.
+
+// Numeric Enum ------------------
+enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right
+}
+
+console.log(Direction.Up);    // Output: 1
+console.log(Direction.Right); // Output: 4 (auto-incremented)
+
+// ✅ Useful for flags, indexes, or numeric values that require auto-incrementing.
+
+enum StatusCode {
+  OK = 200,
+  BadRequest = 400,
+  Unauthorized,   // 401 (auto-incremented)
+  Forbidden       // 402 (auto-incremented)
+}
+
+let responseStatusCode: StatusCode;
+responseStatusCode = StatusCode.Unauthorized;
+console.log(responseStatusCode); // Output: 401
+
+
+// String Enum ----------------------
+enum Status {
+  Success = "SUCCESS",
+  Failure = "FAILURE",
+  Pending = "PENDING"
+}
+
+console.log(Status.Success); // Output: "SUCCESS"
+console.log(Status.Pending); // Output: "PENDING"
+
+let orderStatus: Status = Status.Success;
+console.log(orderStatus); // Output: "SUCCESS"
+// orderStatus = "Done" // Error: Type '"Done"' is not assignable to type 'Status'
+
+// Example Alternative with Union Types (if enums feel overkill): ------------------------
+type RequestStatus = "SUCCESS" | "FAILURE" | "PENDING";
+let orderRequestStatus: RequestStatus = "SUCCESS";
+
+//Enum ensures (Strict Type Checking) ------------------
+// ✅ Prevents incorrect assignments by ensuring only predefined values are used.
+
+enum Role {
+  Admin = "ADMIN",
+  User = "USER",
+  Guest = "GUEST"
+}
+
+let userRole: Role;
+userRole = Role.Admin; // ✅ Allowed
+// userRole = "SuperUser"; // ❌ Error: Type '"SuperUser"' is not assignable to type 'Role'.
+
+// Heterogeneous Enum (Mixed values) ------------------
+enum Result {
+  Pass = "PASS",
+  Fail = 0
+}
+
+console.log(Result.Pass); // Output: "PASS"
+console.log(Result.Fail); // Output: 0
+
+//  Reverse Mapping (For Numeric Enums) -----------
+enum StatusCode {
+  Success = 1,
+  Failure = 2
+}
+
+console.log(StatusCode.Success);  // Output: 1
+console.log(StatusCode[1]);       // Output: "Success" (Reverse mapping)
+
+// Enums can be looped over, which is not possible with normal objects.
+enum Colors {
+  Red = "RED",
+  Green = "GREEN",
+  Blue = "BLUE"
+}
+
+// Looping over enum values
+for (let color in Colors) {
+  console.log(color, Colors[color as keyof typeof Colors]);
+}
+
 
 //----------------- Union of Types -----------------
 let multiType: number | boolean;
