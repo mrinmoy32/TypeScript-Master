@@ -297,8 +297,10 @@ var p2 = {
     lastName: "Sharma"
 };
 greet2(p2);
-//---------------- Classes -----------------
+//---------------- Classes & Access Modifiers -----------------
 // Similar to ES6, TypeScript also allows defining and using classes.
+// Access Modifiers are keywords that sets the accessiblity of properties and methods of a class
+// public, private, protected
 var Employee = /** @class */ (function () {
     function Employee(name) {
         this.employeeName = name;
@@ -314,13 +316,15 @@ console.log(emp1.greet());
 //---------------- Inheritance -----------------
 var Manager = /** @class */ (function (_super) {
     __extends(Manager, _super);
-    function Manager(name) {
-        return _super.call(this, name) || this;
+    function Manager(managerName) {
+        return _super.call(this, managerName) || this;
     }
     Manager.prototype.delegateTask = function () {
-        return "Task1 is assigned to ".concat(this.employeeName);
+        return "Manager delegating task";
     };
     return Manager;
 }(Employee));
 var manager = new Manager("John");
+console.log(manager.employeeName);
 console.log(manager.delegateTask());
+console.log(manager.greet());

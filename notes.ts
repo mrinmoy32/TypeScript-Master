@@ -379,8 +379,10 @@ interface NewPerson {
     lastName?: string;
 }
 
-//---------------- Classes -----------------
+//---------------- Classes & Access Modifiers -----------------
 // Similar to ES6, TypeScript also allows defining and using classes.
+// Access Modifiers are keywords that sets the accessiblity of properties and methods of a class
+// public, private, protected
 
 class Employee {
     public employeeName: string;
@@ -400,14 +402,16 @@ console.log(emp1.greet());
 
 //---------------- Inheritance -----------------
 class Manager extends Employee {
-    constructor(name: string) {
-        super(name);
+    constructor(managerName: string) { // To initialize the base Employee class constructor
+        super(managerName); 
     }
 
     delegateTask(): string {
-        return `Task1 is assigned to ${this.employeeName}`;
+        return `Manager delegating task`;
     }
 }
 
 let manager = new Manager("John");
+console.log(manager.employeeName);
 console.log(manager.delegateTask());
+console.log(manager.greet());
