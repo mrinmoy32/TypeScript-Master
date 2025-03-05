@@ -445,3 +445,30 @@ const myAccount = new BankAccount(1000);
 console.log(myAccount.getBalance()); // ✅ Allowed (via method)
 // console.log(myAccount.balance); // ❌ Error: Property 'balance' is private.
 
+// ---------- Protected ---------------
+
+class Police {
+  protected empId: number;
+
+  constructor(empId: number) {
+    this.empId = empId;
+  }
+
+  protected showId(): void {
+    console.log(`Employee ID: ${this.empId}`);
+  }
+}
+
+class Officer extends Police {
+  constructor(empId: number) {
+    super(empId);
+  }
+
+  public display(): void {
+    this.showId(); // ✅ Allowed (protected method)
+  }
+}
+
+const policeOfficer = new Officer(101);
+policeOfficer.display(); // ✅ Allowed
+// console.log(policeOfficer.empId); // ❌ Error: Property 'empId' is protected.
