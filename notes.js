@@ -301,6 +301,12 @@ greet2(p2);
 // Similar to ES6, TypeScript also allows defining and using classes.
 // Access Modifiers are keywords that sets the accessiblity of properties and methods of a class
 // public, private, protected
+// Modifier	           |  Access Level
+// --------------------|------------------------------------------------
+// public (default)	   |  Accessible from anywhere
+// private	           |  Accessible only inside the class (not event in it's instances)
+// protected	         |  Accessible inside the class and its subclasses (but not in their instances)
+// ----------- Public ------------------
 var Employee = /** @class */ (function () {
     function Employee(name) {
         this.employeeName = name;
@@ -313,7 +319,9 @@ var Employee = /** @class */ (function () {
 var emp1 = new Employee("Pal");
 console.log(emp1.employeeName);
 console.log(emp1.greet());
-//---------------- Inheritance -----------------
+//---------------- Inheritance in TS -----------------
+// Allows a child class to inherit properties and methods from a parent class.
+// Supports method overriding.
 var Manager = /** @class */ (function (_super) {
     __extends(Manager, _super);
     function Manager(managerName) {
@@ -328,3 +336,143 @@ var manager = new Manager("John");
 console.log(manager.employeeName);
 console.log(manager.delegateTask());
 console.log(manager.greet());
+// ----------- Private -------------
+var BankAccount = /** @class */ (function () {
+    function BankAccount(initialBalance) {
+        this.balance = initialBalance;
+    }
+    BankAccount.prototype.deposit = function (amount) {
+        this.balance += amount;
+        console.log("Deposited: $".concat(amount));
+    };
+    BankAccount.prototype.getBalance = function () {
+        return this.balance; // ✅ Allowed inside class
+    };
+    return BankAccount;
+}());
+var myAccount = new BankAccount(1000);
+console.log(myAccount.getBalance()); // ✅ Allowed (via method)
+// console.log(myAccount.balance); // ❌ Error: Property 'balance' is private.
+// ---------- Protected ---------------
+var Police = /** @class */ (function () {
+    function Police(empId) {
+        this.empId = empId;
+    }
+    Police.prototype.showId = function () {
+        console.log("Employee ID: ".concat(this.empId));
+    };
+    return Police;
+}());
+var Officer = /** @class */ (function (_super) {
+    __extends(Officer, _super);
+    function Officer(empId) {
+        return _super.call(this, empId) || this;
+    }
+    Officer.prototype.display = function () {
+        this.showId(); // ✅ Allowed (protected method)
+    };
+    return Officer;
+}(Police));
+var policeOfficer = new Officer(101);
+policeOfficer.display(); // ✅ Allowed
+// console.log(policeOfficer.empId); // ❌ Error: Property 'empId' is protected.
+//------------ Readonly Properties (readonly) --------------
+// Prevents modification after initialization (at runtime).
+// Can be public, private, or protected.
+var Car = /** @class */ (function () {
+    function Car(model) {
+        this.model = model;
+    }
+    Car.prototype.changeModel = function (newModel) {
+        // this.model = newModel; // ❌ Error: Cannot assign to 'model' because it is a read-only property.
+    };
+    return Car;
+}());
+var myCar = new Car("Tesla Model S");
+console.log(myCar.model); // ✅ Allowed
+// myCar.model = "BMW"; // ❌ Error
+// ================Additional topics ===============:
+//--------------------------------------
+// Getters & Setters:
+// Abstraction in TypeScript: Abstraction is hiding the implementation details and only showing the essential features.TypeScript supports abstraction using abstract classes.
+// ✅ Benefits of Abstraction
+// ✔ Forces subclasses to implement certain methods.
+// ✔ Reduces code duplication.
+// ✔ Increases maintainability.
+var Animal = /** @class */ (function () {
+    function Animal() {
+    }
+    Animal.prototype.move = function () {
+        console.log("The animal is moving...");
+    };
+    return Animal;
+}());
+var Dog = /** @class */ (function (_super) {
+    __extends(Dog, _super);
+    function Dog() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Dog.prototype.makeSound = function () {
+        console.log("Woof! Woof!");
+    };
+    return Dog;
+}(Animal));
+var Cat = /** @class */ (function (_super) {
+    __extends(Cat, _super);
+    function Cat() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Cat.prototype.makeSound = function () {
+        console.log("Meow! Meow!");
+    };
+    return Cat;
+}(Animal));
+var myDog = new Dog();
+myDog.makeSound(); // Output: Woof! Woof!
+myDog.move(); // Output: The animal is moving...
+var myCat = new Cat();
+myCat.makeSound(); // Output: Meow! Meow!
+// Encapsulation in TypeScript:  Encapsulation means hiding the internal details of a class and allowing access only through methods.
+// ✅ Benefits of Encapsulation
+// ✔ Prevents direct modification of class properties.
+// ✔ Provides controlled access via getters and setters.
+// ✔ Protects data integrity.
+// 🔹 Example: Encapsulation with private Properties (above BankAccount example)
+// Polymorphism in TypeScript: Polymorphism means "many forms"—a method can behave differently based on the object that calls it.
+// ✅ Benefits of Polymorphism
+// ✔ Enables code reusability.
+// ✔ Allows dynamic method behavior.
+// ✔ Simplifies code maintenance.
+// 🔹 Example: Method Overriding (Runtime Polymorphism)
+var Shape = /** @class */ (function () {
+    function Shape() {
+    }
+    Shape.prototype.draw = function () {
+        console.log("Drawing a shape...");
+    };
+    return Shape;
+}());
+var Circle = /** @class */ (function (_super) {
+    __extends(Circle, _super);
+    function Circle() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Circle.prototype.draw = function () {
+        console.log("Drawing a circle...");
+    };
+    return Circle;
+}(Shape));
+var Square = /** @class */ (function (_super) {
+    __extends(Square, _super);
+    function Square() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    Square.prototype.draw = function () {
+        console.log("Drawing a square...");
+    };
+    return Square;
+}(Shape));
+var shapes = [new Circle(), new Square(), new Shape()];
+shapes.forEach(function (shape) {
+    shape.draw();
+});
