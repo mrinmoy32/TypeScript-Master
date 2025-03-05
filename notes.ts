@@ -390,6 +390,8 @@ interface NewPerson {
 // private	           |  Accessible only inside the class (not event in it's instances)
 // protected	         |  Accessible inside the class and its subclasses (but not in their instances)
 
+
+// ----------- Public ------------------
 class Employee {
     public employeeName: string;
 
@@ -397,7 +399,7 @@ class Employee {
         this.employeeName = name;
     }
 
-    greet(): string {
+    greet(): string {   // public by default as no access modifier is specified
         return `Hi, ${this.employeeName}`;
     }
 }
@@ -406,7 +408,11 @@ let emp1 = new Employee("Pal");
 console.log(emp1.employeeName);
 console.log(emp1.greet());
 
-//---------------- Inheritance -----------------
+//---------------- Inheritance in TS -----------------
+// Allows a child class to inherit properties and methods from a parent class.
+// Supports method overriding.
+
+
 class Manager extends Employee {
     constructor(managerName: string) { // To initialize the base Employee class constructor
         super(managerName); 
@@ -472,3 +478,103 @@ class Officer extends Police {
 const policeOfficer = new Officer(101);
 policeOfficer.display(); // ✅ Allowed
 // console.log(policeOfficer.empId); // ❌ Error: Property 'empId' is protected.
+
+
+//------------ Readonly Properties (readonly) --------------
+// Prevents modification after initialization (at runtime).
+// Can be public, private, or protected.
+
+class Car {
+  readonly model: string;
+
+  constructor(model: string) {
+    this.model = model;
+  }
+
+  changeModel(newModel: string) {
+    // this.model = newModel; // ❌ Error: Cannot assign to 'model' because it is a read-only property.
+  }
+}
+
+const myCar = new Car("Tesla Model S");
+console.log(myCar.model); // ✅ Allowed
+// myCar.model = "BMW"; // ❌ Error
+
+
+// ================Additional topics ===============:
+//--------------------------------------
+// Getters & Setters:
+
+// Abstraction in TypeScript: Abstraction is hiding the implementation details and only showing the essential features.TypeScript supports abstraction using abstract classes.
+// ✅ Benefits of Abstraction
+// ✔ Forces subclasses to implement certain methods.
+// ✔ Reduces code duplication.
+// ✔ Increases maintainability.
+
+abstract class Animal {
+  abstract makeSound(): void; // Abstract method (must be implemented)
+
+  public move(): void {
+    console.log("The animal is moving...");
+  }
+}
+
+class Dog extends Animal {
+  makeSound(): void {
+    console.log("Woof! Woof!");
+  }
+}
+
+class Cat extends Animal {
+  makeSound(): void {
+    console.log("Meow! Meow!");
+  }
+}
+
+const myDog = new Dog();
+myDog.makeSound(); // Output: Woof! Woof!
+myDog.move(); // Output: The animal is moving...
+
+const myCat = new Cat();
+myCat.makeSound(); // Output: Meow! Meow!
+
+
+// Encapsulation in TypeScript:  Encapsulation means hiding the internal details of a class and allowing access only through methods.
+// ✅ Benefits of Encapsulation
+// ✔ Prevents direct modification of class properties.
+// ✔ Provides controlled access via getters and setters.
+// ✔ Protects data integrity.
+
+// 🔹 Example: Encapsulation with private Properties (above BankAccount example)
+
+// Polymorphism in TypeScript: Polymorphism means "many forms"—a method can behave differently based on the object that calls it.
+
+// ✅ Benefits of Polymorphism
+// ✔ Enables code reusability.
+// ✔ Allows dynamic method behavior.
+// ✔ Simplifies code maintenance.
+// 🔹 Example: Method Overriding (Runtime Polymorphism)
+
+class Shape {
+  public draw(): void {
+    console.log("Drawing a shape...");
+  }
+}
+
+class Circle extends Shape {
+  public draw(): void {
+    console.log("Drawing a circle...");
+  }
+}
+
+class Square extends Shape {
+  public draw(): void {
+    console.log("Drawing a square...");
+  }
+}
+
+let shapes: Shape[] = [new Circle(), new Square(), new Shape()];
+
+shapes.forEach(shape => {
+  shape.draw();
+});
