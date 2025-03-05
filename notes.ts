@@ -384,6 +384,12 @@ interface NewPerson {
 // Access Modifiers are keywords that sets the accessiblity of properties and methods of a class
 // public, private, protected
 
+// Modifier	           |  Access Level
+// --------------------|------------------------------------------------
+// public (default)	   |  Accessible from anywhere
+// private	           |  Accessible only inside the class (not event in it's instances)
+// protected	         |  Accessible inside the class and its subclasses (but not in their instances)
+
 class Employee {
     public employeeName: string;
 
@@ -415,3 +421,27 @@ let manager = new Manager("John");
 console.log(manager.employeeName);
 console.log(manager.delegateTask());
 console.log(manager.greet());
+
+
+// ----------- Private -------------
+class BankAccount {
+  private balance: number;
+
+  constructor(initialBalance: number) {
+    this.balance = initialBalance;
+  }
+
+  public deposit(amount: number): void {
+    this.balance += amount;
+    console.log(`Deposited: $${amount}`);
+  }
+
+  public getBalance(): number {
+    return this.balance; // ✅ Allowed inside class
+  }
+}
+
+const myAccount = new BankAccount(1000);
+console.log(myAccount.getBalance()); // ✅ Allowed (via method)
+// console.log(myAccount.balance); // ❌ Error: Property 'balance' is private.
+
