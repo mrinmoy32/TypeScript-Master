@@ -593,3 +593,40 @@ let shapes: Shape[] = [new Circle(), new Square(), new Shape()];
 shapes.forEach(shape => {
   shape.draw();
 });
+
+
+// -------------- TypeScript Generics ------------
+
+// Generics allow creating 'type variables' which can be used to create classes, functions & type aliases that don't need to explicitly define the types that they use.
+
+function createPair<S, T>(v1: S, v2: T): [S, T] {
+  return [v1, v2];
+}
+console.log(createPair<string, number>('hello', 42)); // ['hello', 42]
+
+class NamedValue<T> {
+  private _value: T | undefined;
+
+  constructor(private name: string) {}
+
+  public setValue(value: T) {
+    this._value = value;
+  }
+
+  public getValue(): T | undefined {
+    return this._value;
+  }
+
+  public toString(): string {
+    return `${this.name}: ${this._value}`;
+  }
+}
+
+let value = new NamedValue<number>('myNumber');
+value.setValue(10);
+console.log(value.toString()); // myNumber: 10
+
+// Generics in type aliases allow creating types that are more reusable.
+type Wrapped<T = string> = { value: T }; // T has an optional default value of string
+
+const wrappedValue: Wrapped<number> = { value: 10 };
