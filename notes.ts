@@ -310,6 +310,21 @@ anyType = "Hello";
 
 // The 'any' type doesn't provide IntelliSense support.
 
+// ------------------- Casting with as ---------------
+
+let x: unknown = 'hello';
+console.log((x as string).length);
+
+let x2: unknown = 4;
+console.log((x2 as string).length); // prints undefined since numbers don't have a length
+
+// ------------------- Casting with <> ---------------
+
+let x3: unknown = 'hello';
+console.log((<string>x3).length);
+
+
+
 //---------------- Functions -----------------
 function add(num1: number, num2: number): number {
     return num1 + num2;
