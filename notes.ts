@@ -653,3 +653,15 @@ const wrappedValue: Wrapped<number> = { value: 10 };
 //   type: carType,
 //   model: carModel
 // };
+
+// Q. Define a type in ts to be used for theme and that would be either dark or light 
+
+// ✅ Using Type Alias (Best Way)
+
+type Theme = "dark" | "light";  // union type
+
+let currentTheme: Theme;
+
+currentTheme = "dark";  // ✅ Valid
+currentTheme = "light"; // ✅ Valid
+// currentTheme = "blue";  // ❌ Error: Type '"blue"' is not assignable to type 'Theme'
