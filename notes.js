@@ -254,6 +254,14 @@ anyType = 20;
 anyType = true;
 anyType = "Hello";
 // The 'any' type doesn't provide IntelliSense support.
+// ------------------- Casting with as ---------------
+var x = 'hello';
+console.log(x.length);
+var x2 = 4;
+console.log(x2.length); // prints undefined since numbers don't have a length
+// ------------------- Casting with <> ---------------
+var x3 = 'hello';
+console.log(x3.length);
 //---------------- Functions -----------------
 function add(num1, num2) {
     return num1 + num2;
@@ -476,3 +484,47 @@ var shapes = [new Circle(), new Square(), new Shape()];
 shapes.forEach(function (shape) {
     shape.draw();
 });
+// -------------- TypeScript Generics ------------
+// Generics allow creating 'type variables' which can be used to create classes, functions & type aliases that don't need to explicitly define the types that they use.
+function createPair(v1, v2) {
+    return [v1, v2];
+}
+console.log(createPair('hello', 42)); // ['hello', 42]
+var NamedValue = /** @class */ (function () {
+    function NamedValue(name) {
+        this.name = name;
+    }
+    NamedValue.prototype.setValue = function (value) {
+        this._value = value;
+    };
+    NamedValue.prototype.getValue = function () {
+        return this._value;
+    };
+    NamedValue.prototype.toString = function () {
+        return "".concat(this.name, ": ").concat(this._value);
+    };
+    return NamedValue;
+}());
+var value = new NamedValue('myNumber');
+value.setValue(10);
+console.log(value.toString()); // myNumber: 10
+var wrappedValue = { value: 10 };
+// -------------------Type Aliases--------------------
+// Type Aliases allow defining types with a custom name (an Alias).
+// Type Aliases can be used for primitives like string or more complex types such as objects and arrays:
+// type CarYear = number
+// type CarType = string
+// type CarModel = string
+// type Car = {
+//   year: CarYear,
+//   type: CarType,
+//   model: CarModel
+// }
+// const carYear: CarYear = 2001
+// const carType: CarType = "Toyota"
+// const carModel: CarModel = "Corolla"
+// const car: Car = {
+//   year: carYear,
+//   type: carType,
+//   model: carModel
+// };
